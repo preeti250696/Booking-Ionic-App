@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button [routerLink]="['/','places','tabs','offers','new']">
+        <ion-icon name="add" icon-only></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Offers</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row>
+    <ion-col>
+      <div text-center *ngIf="isLoading">
+      <ion-spinner color="primary"></ion-spinner>
+      </div>
+      <div text-center *ngIf="!isLoading && offers.length <=0">
+      <p >
+        No Offers found. Create New one!
+      </p>
+      <ion-button color="primary" [routerLink] ="['/','places','tabs','offers','new']">Offer New PLace</ion-button>
+      </div>
+      <ion-list *ngIf="!isLoading && offers.length >0">
+        <ion-item-sliding *ngFor="let offer of offers" #slidingItem>
+        <app-offer-item [offer]="offer"></app-offer-item>
+        <ion-item-options>
+          <ion-item-option (click)="onEdit(offer.id, slidingItem)">
+            <ion-icon name = "create" slot="icon-only"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-content>
